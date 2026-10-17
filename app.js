@@ -10,18 +10,19 @@
 
 const app = document.getElementById("app");
 const topbar = document.getElementById("topbar");
-const STORAGE_KEY = "maythu-party-scores-v2";
+const STORAGE_KEY = "maythu-party-scores-v3";
 
 // ── Score storage ───────────────────────────────────────────
-// One running total per person across all games.
-// shape: { [personIndex]: number }
+// One running total per person across all games, keyed by name
+// so reordering people.js never shifts anyone's marks.
+// shape: { [personName]: number }
 function loadScores() {
   try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; }
   catch { return {}; }
 }
 function saveScores(s) { localStorage.setItem(STORAGE_KEY, JSON.stringify(s)); }
-function getScore(scores, p) { return scores[p] || 0; }
-function setScore(scores, p, v) { scores[p] = Math.max(0, v); saveScores(scores); }
+function getScore(scores, p) { return scores[PEOPLE[p].name] || 0; }
+function setScore(scores, p, v) { scores[PEOPLE[p].name] = Math.max(0, v); saveScores(scores); }
 
 // ── Helpers ─────────────────────────────────────────────────
 function esc(s) {
@@ -294,15 +295,9 @@ function renderScores() {
       </div>
 
       <div class="people-grid">
-        ${PEOPLE.map((p, i) => `
-          <div class="person">
-            ${avatarHTML(p, i)}
-            <div class="name">${esc(p.name)}</div>
-            <div class="score" id="s-${i}">${getScore(scores, i)}</div>
-            <div class="adjust">
-              <button data-adj="-1" data-p="${i}" aria-label="minus">−</button>
-              <button data-adj="1" data-p="${i}" aria-label="plus">+</button>
-            </div>
+        ${personGroups().map(g => `
+          <div class="team-group ${g.length === 1 ? "solo" : ""}">
+            ${g.map(i => personCard(i)).join("")}
           </div>`).join("")}
       </div>
 
@@ -318,6 +313,29 @@ function renderScores() {
       if (confirmReset()) { Object.keys(scores).forEach(k => delete scores[k]); saveScores(scores); draw(); }
     });
     drawTable();
+  }
+
+  // People grouped by team in TEAMS order; anyone not in a team is appended solo
+  function personGroups() {
+    const seen = new Set();
+    const groups = (window.TEAMS || []).map(t =>
+      t.members.map(n => PEOPLE.findIndex(p => p.name === n)).filter(i => i >= 0 && !seen.has(i) && seen.add(i))
+    ).filter(g => g.length);
+    PEOPLE.forEach((_, i) => { if (!seen.has(i)) groups.push([i]); });
+    return groups;
+  }
+  function personCard(i) {
+    const p = PEOPLE[i];
+    return `
+      <div class="person">
+        ${avatarHTML(p, i)}
+        <div class="name">${esc(p.name)}</div>
+        <div class="score" id="s-${i}">${getScore(scores, i)}</div>
+        <div class="adjust">
+          <button data-adj="-1" data-p="${i}" aria-label="minus">−</button>
+          <button data-adj="1" data-p="${i}" aria-label="plus">+</button>
+        </div>
+      </div>`;
   }
 
   // two-click confirmation for "Reset all" (no browser dialogs)

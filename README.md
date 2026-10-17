@@ -27,5 +27,7 @@ Quiz option photos in `photos/options/` come from Wikimedia Commons:
 - Mohinga – "Mohnga.jpg", Charles Haynes, CC BY-SA 2.0
 - Laphet thoke – "Lahpet thohk (20250315181751).jpg", Allervous, CC BY-SA 4.0
 - Nan gyi thoke – "Nan gyi thoke.png", Yee Mon Mon, CC BY-SA 4.0
+- Green tea – "China - Chengdu 22 - green tea (140902695).jpg", McKay Savage, CC BY 2.0
+- Cola – "Glass of Cola.jpg", Cocktailmarler, CC BY-SA 4.0
 
 Marks are one running total per person across all games. They are saved in the browser (localStorage) and survive refreshes.

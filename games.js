@@ -55,8 +55,8 @@ window.GAMES = [
         q: "အကြိုက်ဆုံး သောက်စရာ",
         options: [
           { text: "ကော်ဖီ",      emoji: "☕" },
-          { text: "ရေနွေးကြမ်း", emoji: "🍵" },
-          { text: "လက်ဖက်ရည်",  emoji: "🧋" },
+          { text: "ရေနွေးကြမ်း", img: "photos/options/greentea.jpg" },
+          { text: "Cola",        img: "photos/options/cola.jpg" },
         ],
       },
     ],

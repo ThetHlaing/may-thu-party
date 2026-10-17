@@ -139,11 +139,20 @@ function initQuiz(game) {
         </div>
         <div class="counter">Question ${i + 1} / ${n}</div>
         <div class="qtext">${esc(q.q)}</div>
-        <div class="options">
-          ${q.options.map((o, k) => `
+        <div class="options ${q.options.some(o => o && typeof o === "object" && (o.img || o.emoji || o.color)) ? "visual" : ""}">
+          ${q.options.map((o, k) => {
+            const opt = typeof o === "string" ? { text: o } : o;
+            let media = "";
+            if (opt.img)   media = `<div class="opt-media" style="background-image:url('${esc(opt.img)}')"></div>`;
+            else if (opt.color) media = `<div class="opt-media swatch" style="background:${esc(opt.color)}"></div>`;
+            else if (opt.emoji) media = `<div class="opt-media icon">${opt.emoji}</div>`;
+            return `
             <button class="option ${picks[i] === k ? "selected" : ""}" data-k="${k}">
-              <span class="letter">${"ABC"[k] || k + 1}</span>${esc(o)}
-            </button>`).join("")}
+              <span class="letter">${"ABC"[k] || k + 1}</span>
+              ${media}
+              <span class="opt-text">${esc(opt.text)}</span>
+            </button>`;
+          }).join("")}
         </div>
         <div class="quiz-nav">
           <button class="btn ghost" id="qPrev" ${i === 0 ? "disabled" : ""}>‹ Previous</button>

@@ -13,26 +13,51 @@ window.GAMES = [
     subtitle: "မေသူကို အသိဆုံး ဘယ်သူလဲ",
     emoji: "🧠",
     type: "quiz",
+    // Each option can be a plain string, or an object with:
+    //   text  : the label
+    //   img   : a photo in photos/options/   (shown large above the label)
+    //   emoji : an icon instead of a photo
+    //   color : a CSS colour swatch instead of a photo
     questions: [
       {
         q: "မေသူ အကြိုက်ဆုံး အရောင်",
-        options: ["အဖြူ", "အမဲ", "အပြာ"],
+        options: [
+          { text: "အဖြူ", color: "#ffffff" },
+          { text: "အမဲ",  color: "#111111" },
+          { text: "အပြာ", color: "#2b6cff" },
+        ],
       },
       {
         q: "မေသူအကြိုက်ဆုံး မြန်မာအစားအစာ",
-        options: ["မုန့်ဟင်းခါး", "လက်ဖက်သုပ်", "နန်းကြီးသုပ်"],
+        options: [
+          { text: "မုန့်ဟင်းခါး", img: "photos/options/mohinga.jpg" },
+          { text: "လက်ဖက်သုပ်",  img: "photos/options/laphet.jpg" },
+          { text: "နန်းကြီးသုပ်", img: "photos/options/nangyi.jpg" },
+        ],
       },
       {
         q: "အကြိုက်ဆုံး ကိုရီးယားမင်းသား",
-        options: ["ဝမ်ဘင်း", "လီမင်ဟို", "လီဒေါင်ဝတ်"],
+        options: [
+          { text: "ဝမ်ဘင်း",    img: "photos/options/wonbin.jpg" },
+          { text: "လီမင်ဟို",   img: "photos/options/leeminho.jpg" },
+          { text: "လီဒေါင်ဝတ်", img: "photos/options/leedongwook.jpg" },
+        ],
       },
       {
         q: "အကြိုက်ဆုံး ရာသီဥတု",
-        options: ["နွေ", "မိုး", "ဆောင်း"],
+        options: [
+          { text: "နွေ",    emoji: "☀️" },
+          { text: "မိုး",   emoji: "🌧️" },
+          { text: "ဆောင်း", emoji: "❄️" },
+        ],
       },
       {
         q: "အကြိုက်ဆုံး သောက်စရာ",
-        options: ["ကော်ဖီ", "ရေနွေးကြမ်း", "လက်ဖက်ရည်"],
+        options: [
+          { text: "ကော်ဖီ",      emoji: "☕" },
+          { text: "ရေနွေးကြမ်း", emoji: "🍵" },
+          { text: "လက်ဖက်ရည်",  emoji: "🧋" },
+        ],
       },
     ],
   },
